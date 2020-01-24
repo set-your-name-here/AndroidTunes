@@ -12,6 +12,23 @@ import retrofit2.http.Query
 
 interface RetrofitController {
 
+    /**
+     * @param term - The URL-encoded text string you want to search for. (Required)
+     * @param country - The two-letter country code for the store you want to search.
+     * The search uses the default store front for the specified country (Required)
+     */
+    @GET("search")
+    fun search(
+        @Query("term") term: String,
+        @Query("country") country: String
+    ): Observable<Result>
+
+    /**
+     * @param term - The URL-encoded text string you want to search for
+     * @param country - The two-letter country code for the store you want to search.
+     * The search uses the default store front for the specified country.
+     * @param media - The media type you want to search for. (Not required)
+     */
     @GET("search")
     fun search(
         @Query("term") term: String,
@@ -19,11 +36,29 @@ interface RetrofitController {
         @Query("media") media: String
     ): Observable<Result>
 
+    /**
+     * @param term - The URL-encoded text string you want to search for
+     * @param country - The two-letter country code for the store you want to search.
+     * The search uses the default store front for the specified country.
+     * @param media - The media type you want to search for. (Not required)
+     * @param entity - The type of results you want returned, relative to the specified media type.
+     * For example: movieArtist for a movie media type search.
+     * The default is the track entity associated with the specified media type. (Not required)
+     */
+    @GET("search")
+    fun search(
+        @Query("term") term: String,
+        @Query("country") country: String,
+        @Query("media") media: String,
+        @Query("entity") entity: String
+    ): Observable<Result>
+
+    @GET("lookup")
+    fun lookUp(): Observable<Result>
+
     companion object Factory {
 
         private const val BASE_URL: String = "https://itunes.apple.com/"
-        const val COUNTRY_CODE_RU: String = "RU"
-        const val MEDIA_TYPE: String = "music"
 
         fun create(): RetrofitController {
             val gson = GsonBuilder()
