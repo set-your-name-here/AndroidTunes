@@ -27,8 +27,9 @@ class ListRecyclerAdapter(var items: ArrayList<ResultItem>) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ListRecyclerViewHolder) {
             val item = items[position]
-            val nameValue = "${item.artistName} - ${item.collectionName}"
-            holder.name.text = nameValue
+            val artistValue = "Исполнитель: ${item.artistName}"
+            holder.album.text = item.collectionName
+            holder.artist.text = artistValue
 
             if (item.artworkUrl60.isNotBlank()) {
                 Picasso.get()
@@ -41,7 +42,8 @@ class ListRecyclerAdapter(var items: ArrayList<ResultItem>) : RecyclerView.Adapt
 
     inner class ListRecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var image: AppCompatImageView = view.itemImage
-        var name: AppCompatTextView = view.itemName
+        var album: AppCompatTextView = view.itemAlbumName
+        var artist: AppCompatTextView = view.itemArtistName
     }
 
 }
