@@ -29,8 +29,17 @@ interface RetrofitController {
         @Query("entity") entity: String
     ): Observable<Result>
 
+    /**
+     * @param id - The identify of album
+     * @param country - The two-letter country code for the store you want to search.
+     * @param entity - The type of results you want returned, relative to the specified media type.
+     */
     @GET("lookup")
-    fun lookUp(): Observable<Result>
+    fun lookUp(
+        @Query("id") id: Long,
+        @Query("country") country: String,
+        @Query("entity") entity: String
+    ): Observable<Result>
 
     companion object Factory {
 

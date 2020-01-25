@@ -9,15 +9,22 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import kotlinx.android.synthetic.main.fragment_list.*
 import myself.synh.androidtunes.R
+import myself.synh.androidtunes.models.entities.ResultItem
 import myself.synh.androidtunes.viewmodels.ListViewModel
 import myself.synh.androidtunes.viewmodels.factories.ListViewModelFactory
 import myself.synh.androidtunes.views.listeners.ListListener
 
 class ListFragment : Fragment(R.layout.fragment_list), ListListener {
+
+    companion object {
+        const val ALBUM_ID_TAG = "AlbumID"
+    }
 
     private lateinit var listViewModel: ListViewModel
 
@@ -35,7 +42,7 @@ class ListFragment : Fragment(R.layout.fragment_list), ListListener {
             layoutManager = listViewModel.listLayoutManager
         }
 
-        listSearchEditText.setOnEditorActionListener { v, actionId, event ->
+        listSearchEditText.setOnEditorActionListener { v, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
                     hideKeyboard()
@@ -54,6 +61,13 @@ class ListFragment : Fragment(R.layout.fragment_list), ListListener {
         }
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        listRecyclerView.apply {
+            adapter = null
+            layoutManager = null
+        }
+    }
 
     private fun hideKeyboard() {
         activity?.apply {
@@ -83,6 +97,14 @@ class ListFragment : Fragment(R.layout.fragment_list), ListListener {
 
     override fun stopRefresh() {
         listRefreshLayout.isRefreshing = false
+    }
+
+    override fun showAlbumInfo(album: ResultItem) {
+        findNavController().navigate(
+            R.id.action_listFragment_to_albumFragment, bundleOf(
+                ALBUM_ID_TAG to album.collectionId
+            )
+        )
     }
 
 }

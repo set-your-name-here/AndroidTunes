@@ -1,5 +1,7 @@
 package myself.synh.androidtunes.views.listeners
 
+import myself.synh.androidtunes.models.entities.ResultItem
+
 interface ListListener {
 
     fun showProgressBar()
@@ -7,5 +9,6 @@ interface ListListener {
     fun showEmptyList()
     fun hideEmptyList()
     fun stopRefresh()
+    fun showAlbumInfo(album: ResultItem)
 
 }

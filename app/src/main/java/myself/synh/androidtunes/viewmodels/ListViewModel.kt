@@ -10,16 +10,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import myself.synh.androidtunes.App
-import myself.synh.androidtunes.models.retrofit.CountryCode
+import myself.synh.androidtunes.models.entities.ResultItem
+import myself.synh.androidtunes.models.retrofit.RequestCountryCode
 import myself.synh.androidtunes.models.retrofit.RequestMediaEntity
 import myself.synh.androidtunes.models.retrofit.RequestMediaType
 import myself.synh.androidtunes.viewmodels.adapters.ListRecyclerAdapter
 import myself.synh.androidtunes.views.listeners.ListListener
+import myself.synh.androidtunes.views.listeners.RecyclerListener
 import java.util.*
 import kotlin.collections.ArrayList
 
 class ListViewModel(context: Context, private var listener: ListListener) :
-    ViewModel() {
+    ViewModel(), RecyclerListener {
 
     companion object {
         private var LOAD_TAG = "AlbumsLoader"
@@ -32,7 +34,7 @@ class ListViewModel(context: Context, private var listener: ListListener) :
         Toast.makeText(context, LOAD_ERROR_TOAST_MESSAGE, Toast.LENGTH_SHORT)
     private var listLastSearchTerm: String = ""
 
-    var listAdapter: ListRecyclerAdapter = ListRecyclerAdapter(ArrayList())
+    var listAdapter: ListRecyclerAdapter = ListRecyclerAdapter(ArrayList(), this)
     var listLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
 
     fun loadAlbumsByTerm(term: String) {
@@ -45,7 +47,7 @@ class ListViewModel(context: Context, private var listener: ListListener) :
                 App.retrofit
                     .search(
                         term = term,
-                        country = CountryCode.RU.value,
+                        country = RequestCountryCode.RU.value,
                         media = RequestMediaType.MUSIC.value,
                         entity = RequestMediaEntity.ALBUM.value
                     )
@@ -94,6 +96,10 @@ class ListViewModel(context: Context, private var listener: ListListener) :
     override fun onCleared() {
         super.onCleared()
         listDisposable.clear()
+    }
+
+    override fun openInfo(album: ResultItem) {
+        listener.showAlbumInfo(album)
     }
 
 }

@@ -10,8 +10,10 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_list_item.view.*
 import myself.synh.androidtunes.R
 import myself.synh.androidtunes.models.entities.ResultItem
+import myself.synh.androidtunes.views.listeners.RecyclerListener
 
-class ListRecyclerAdapter(var items: ArrayList<ResultItem>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ListRecyclerAdapter(var items: ArrayList<ResultItem>, var listener: RecyclerListener) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         ListRecyclerViewHolder(
@@ -36,7 +38,6 @@ class ListRecyclerAdapter(var items: ArrayList<ResultItem>) : RecyclerView.Adapt
                     .load(item.artworkUrl100)
                     .into(holder.image)
             }
-
         }
     }
 
@@ -44,6 +45,12 @@ class ListRecyclerAdapter(var items: ArrayList<ResultItem>) : RecyclerView.Adapt
         var image: AppCompatImageView = view.itemImage
         var album: AppCompatTextView = view.itemAlbumName
         var artist: AppCompatTextView = view.itemArtistName
+
+        init {
+            view.setOnClickListener {
+                listener.openInfo(items[adapterPosition])
+            }
+        }
     }
 
 }
