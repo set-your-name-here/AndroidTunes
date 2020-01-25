@@ -3,7 +3,12 @@ package myself.synh.androidtunes.viewmodels.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.fragment_list_item.view.*
 import myself.synh.androidtunes.R
 import myself.synh.androidtunes.models.entities.ResultItem
 
@@ -22,12 +27,25 @@ class ListRecyclerAdapter(var items: ArrayList<ResultItem>) : RecyclerView.Adapt
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ListRecyclerViewHolder) {
+            val item = items[position]
+            //val numberValue = "${position + 1}."
+            val nameValue = "${item.artistName} - ${item.collectionName}"
+            //holder.number.text = numberValue
+            holder.name.text = nameValue
+
+            if (item.artworkUrl60.isNotBlank()) {
+                Picasso.get()
+                    .load(item.artworkUrl60)
+                    .into(holder.image)
+            }
 
         }
     }
 
     inner class ListRecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
+        var number: AppCompatTextView = view.itemNumber
+        var image: AppCompatImageView = view.itemImage
+        var name: AppCompatTextView = view.itemName
     }
 
 }

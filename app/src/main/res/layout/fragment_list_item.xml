@@ -10,33 +10,27 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="4dp"
-        android:weightSum="3">
+        android:padding="4dp">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/itemNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:text="1."
             android:textColor="@android:color/white" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/itemImage"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_weight="1.5"
-            android:lines="1"
-            android:text="Adept"
-            android:textColor="@android:color/white" />
+            android:layout_height="wrap_content"/>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
+            android:id="@+id/itemName"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            android:layout_weight="1.5"
             android:lines="1"
-            android:padding="2dp"
-            android:text="Sleepless"
+            android:gravity="center"
             android:textColor="@android:color/white" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
