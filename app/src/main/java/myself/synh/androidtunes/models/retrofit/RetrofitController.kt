@@ -13,30 +13,6 @@ import retrofit2.http.Query
 interface RetrofitController {
 
     /**
-     * @param term - The URL-encoded text string you want to search for. (Required)
-     * @param country - The two-letter country code for the store you want to search.
-     * The search uses the default store front for the specified country (Required)
-     */
-    @GET("search")
-    fun search(
-        @Query("term") term: String,
-        @Query("country") country: String
-    ): Observable<Result>
-
-    /**
-     * @param term - The URL-encoded text string you want to search for
-     * @param country - The two-letter country code for the store you want to search.
-     * The search uses the default store front for the specified country.
-     * @param media - The media type you want to search for. (Not required)
-     */
-    @GET("search")
-    fun search(
-        @Query("term") term: String,
-        @Query("country") country: String,
-        @Query("media") media: String
-    ): Observable<Result>
-
-    /**
      * @param term - The URL-encoded text string you want to search for
      * @param country - The two-letter country code for the store you want to search.
      * The search uses the default store front for the specified country.

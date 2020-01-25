@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_list_item.view.*
@@ -28,14 +27,12 @@ class ListRecyclerAdapter(var items: ArrayList<ResultItem>) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ListRecyclerViewHolder) {
             val item = items[position]
-            //val numberValue = "${position + 1}."
             val nameValue = "${item.artistName} - ${item.collectionName}"
-            //holder.number.text = numberValue
             holder.name.text = nameValue
 
             if (item.artworkUrl60.isNotBlank()) {
                 Picasso.get()
-                    .load(item.artworkUrl60)
+                    .load(item.artworkUrl100)
                     .into(holder.image)
             }
 
@@ -43,7 +40,6 @@ class ListRecyclerAdapter(var items: ArrayList<ResultItem>) : RecyclerView.Adapt
     }
 
     inner class ListRecyclerViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        var number: AppCompatTextView = view.itemNumber
         var image: AppCompatImageView = view.itemImage
         var name: AppCompatTextView = view.itemName
     }

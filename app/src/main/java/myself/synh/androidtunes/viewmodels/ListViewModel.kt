@@ -33,8 +33,7 @@ class ListViewModel(context: Context, private var listener: ListListener) :
     private var listLastSearchTerm: String = ""
 
     var listAdapter: ListRecyclerAdapter = ListRecyclerAdapter(ArrayList())
-    var listLayoutManager: RecyclerView.LayoutManager =
-        LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+    var listLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
 
     fun loadAlbumsByTerm(term: String) {
         if (term.isNotBlank()) {
