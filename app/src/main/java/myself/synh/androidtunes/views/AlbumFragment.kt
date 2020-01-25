@@ -17,8 +17,8 @@ import myself.synh.androidtunes.views.listeners.AlbumListener
 
 class AlbumFragment : Fragment(R.layout.fragment_album), AlbumListener {
 
-    companion object{
-        private const val DP_IMAGE_SIZE = 200
+    companion object {
+        private const val DP_IMAGE_SIZE = 150
     }
 
     private lateinit var albumViewModel: AlbumViewModel
@@ -40,6 +40,11 @@ class AlbumFragment : Fragment(R.layout.fragment_album), AlbumListener {
         setupAlbumTracks()
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        destoryAlbumTracks()
+    }
+
     override fun setupAlbumDescription() {
         albumViewModel.album?.let { a ->
             albumTitle.text = a.collectionName
@@ -55,6 +60,21 @@ class AlbumFragment : Fragment(R.layout.fragment_album), AlbumListener {
         albumRecyclerView.apply {
             adapter = albumViewModel.albumAdapter
             layoutManager = albumViewModel.albumLayoutManager
+        }
+        albumDescriptionView.apply {
+            adapter = albumViewModel.descriptionAdapter
+            layoutManager = albumViewModel.descriptionLayoutManager
+        }
+    }
+
+    private fun destoryAlbumTracks(){
+        albumRecyclerView.apply {
+            adapter = null
+            layoutManager = null
+        }
+        albumDescriptionView.apply {
+            adapter = null
+            layoutManager = null
         }
     }
 

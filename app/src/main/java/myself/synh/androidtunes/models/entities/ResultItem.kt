@@ -35,5 +35,7 @@ data class ResultItem(
     @SerializedName("trackTimeMillis")
     var trackTimeMillis: Long = 0L, //The returned track’s time in milliseconds.
     @SerializedName("primaryGenreName")
-    var primaryGenreName: String = String()
+    var primaryGenreName: String = String(),
+    @SerializedName("copyright")
+    var copyright: String = String()
 ): Parcelable
