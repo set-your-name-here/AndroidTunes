@@ -42,12 +42,15 @@ class ListFragment : Fragment(R.layout.fragment_list), ListListener {
             layoutManager = listViewModel.listLayoutManager
         }
 
+        //Set listener for search editor
         listSearchEditText.setOnEditorActionListener { v, actionId, _ ->
             return@setOnEditorActionListener when (actionId) {
                 EditorInfo.IME_ACTION_DONE -> {
                     hideKeyboard()
                     val value = v.text.toString()
-                    listViewModel.loadAlbumsByTerm(value)
+                    if (value.isNotBlank()) {
+                        listViewModel.loadAlbumsByTerm(value)
+                    }
                     true
                 }
                 else -> {
