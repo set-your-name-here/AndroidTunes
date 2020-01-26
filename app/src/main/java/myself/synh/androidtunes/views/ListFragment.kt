@@ -37,6 +37,7 @@ class ListFragment : Fragment(R.layout.fragment_list), ListListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Setup adapter and layout manager for recycler view with albums
         listRecyclerView.apply {
             adapter = listViewModel.listAdapter
             layoutManager = listViewModel.listLayoutManager
@@ -66,6 +67,7 @@ class ListFragment : Fragment(R.layout.fragment_list), ListListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        //Remove adapter and layout manager for recycler view with albums
         listRecyclerView.apply {
             adapter = null
             layoutManager = null
