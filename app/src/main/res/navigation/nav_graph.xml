@@ -8,15 +8,16 @@
     <fragment
         android:id="@+id/listFragment"
         android:name="myself.synh.androidtunes.views.ListFragment"
-        android:label="fragment_list"
         tools:layout="@layout/fragment_list" >
         <action
             android:id="@+id/action_listFragment_to_albumFragment"
-            app:destination="@id/albumFragment" />
+            app:destination="@id/albumFragment"
+            app:exitAnim="@anim/slide_out_none"
+            app:enterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"/>
     </fragment>
     <fragment
         android:id="@+id/albumFragment"
         android:name="myself.synh.androidtunes.views.AlbumFragment"
-        android:label="fragment_album"
         tools:layout="@layout/fragment_album" />
 </navigation>

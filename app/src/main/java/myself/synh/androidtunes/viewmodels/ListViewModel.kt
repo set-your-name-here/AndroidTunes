@@ -10,6 +10,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import myself.synh.androidtunes.App
+import myself.synh.androidtunes.R
 import myself.synh.androidtunes.models.entities.ResultItem
 import myself.synh.androidtunes.models.retrofit.RequestCountryCode
 import myself.synh.androidtunes.models.retrofit.RequestMediaEntity
@@ -20,18 +21,20 @@ import myself.synh.androidtunes.views.listeners.RecyclerListener
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ListViewModel(context: Context, private var listener: ListListener) :
+class ListViewModel(var context: Context, private var listener: ListListener) :
     ViewModel(), RecyclerListener {
 
     companion object {
         private var LOAD_TAG = "AlbumsLoader"
         private var LOAD_ERROR_LOG_MESSAGE = "Loading error"
-        private var LOAD_ERROR_TOAST_MESSAGE = "Ошибка загрузки"
     }
 
     private var listDisposable = CompositeDisposable()
-    private var listLoadErrorToast =
-        Toast.makeText(context, LOAD_ERROR_TOAST_MESSAGE, Toast.LENGTH_SHORT)
+    private var listLoadErrorToast = Toast.makeText(
+        context,
+        context.resources.getString(R.string.list_error_value),
+        Toast.LENGTH_SHORT
+    )
     private var listLastSearchTerm: String = ""
 
     var listAdapter: ListRecyclerAdapter = ListRecyclerAdapter(ArrayList(), this)
@@ -73,7 +76,7 @@ class ListViewModel(context: Context, private var listener: ListListener) :
                     }, { t ->
                         Log.e(LOAD_TAG, LOAD_ERROR_LOG_MESSAGE, t)
                         listLoadErrorToast.show()
-                        listener.hideProgressBar()
+//                        listener.hideProgressBar()
                         listener.stopRefresh()
                     })
             )

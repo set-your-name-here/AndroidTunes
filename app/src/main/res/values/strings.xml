@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">AndroidTunes</string>
     <string name="list_empty_value">Ничего не найдено</string>
+    <string name="list_error_value">Ошибка загрузки</string>
     <string name="list_search_edit_hint_value">Введите название исполнителя…</string>
     <string name="list_album_description_artist_name">Исполнитель:</string>
     <string name="list_album_description_track_count">Количество треков:</string>

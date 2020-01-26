@@ -4,6 +4,8 @@ package myself.synh.androidtunes.views
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -54,6 +56,11 @@ class AlbumFragment : Fragment(R.layout.fragment_album), AlbumListener {
                 .resize(px, px)
                 .into(albumCover)
         }
+    }
+
+    override fun hideProgressBar() {
+        albumProgressBar.visibility = GONE
+        albumTracksTitle.visibility = VISIBLE
     }
 
     private fun setupAlbumTracks() {

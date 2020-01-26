@@ -1,8 +1,8 @@
 package myself.synh.androidtunes.viewmodels
 
 import android.content.Context
-import androidx.core.content.ContextCompat
-import androidx.core.content.res.ResourcesCompat
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -23,9 +23,17 @@ class AlbumViewModel(var context: Context, collectionId: Long, listener: AlbumLi
     ViewModel() {
 
     companion object {
+        private const val ALBUM_LOADER_TAG = "AlbumLoader"
+        private const val ALBUN_LOADER_ERROR_MSG = "Error on load album info"
         private const val TEXT_SPACE_SEPARATOR = " "
         private const val TEXT_EMPTY = ""
     }
+
+    private var albumLoadErrorToast = Toast.makeText(
+        context,
+        context.resources.getString(R.string.list_error_value),
+        Toast.LENGTH_SHORT
+    )
 
     var albumAdapter: AlbumRecyclerAdapter = AlbumRecyclerAdapter(ArrayList())
     var albumLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
@@ -46,12 +54,16 @@ class AlbumViewModel(var context: Context, collectionId: Long, listener: AlbumLi
             .filter { result -> result.resultCount != 0 }
             .subscribeOn(Schedulers.single())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { result ->
+            .subscribe({ result ->
                 buildDescription(result.results[0])
                 result.results.removeAt(0)
                 buildTracks(result.results)
                 listener.setupAlbumDescription()
-            }
+                listener.hideProgressBar()
+            }, { t ->
+                Log.e(ALBUM_LOADER_TAG, ALBUN_LOADER_ERROR_MSG, t)
+                albumLoadErrorToast.show()
+            })
     )
 
     override fun onCleared() {
