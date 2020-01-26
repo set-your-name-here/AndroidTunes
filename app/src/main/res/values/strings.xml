@@ -6,6 +6,7 @@
     <string name="list_album_description_artist_name">Исполнитель:</string>
     <string name="list_album_description_track_count">Количество треков:</string>
     <string name="list_album_description_genre">Жанр:</string>
+    <string name="list_album_description_price">Цена:</string>
     <string name="list_album_description_copyright">Copyright</string>
     <string name="album_tracks_title_value">Список треков</string>
 </resources>

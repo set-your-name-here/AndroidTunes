@@ -96,6 +96,14 @@ class AlbumViewModel(var context: Context, collectionId: Long, listener: AlbumLi
                 value = descriptionItem.primaryGenreName
             ),
             AlbumDescriptionItem(
+                title = context.resources.getString(R.string.list_album_description_price),
+                value = StringBuilder()
+                    .append(descriptionItem.collectionPrice)
+                    .append(TEXT_SPACE_SEPARATOR)
+                    .append(descriptionItem.currency)
+                    .toString()
+            ),
+            AlbumDescriptionItem(
                 title = TEXT_EMPTY,
                 value = StringBuilder()
                     .append(context.resources.getString(R.string.list_album_description_copyright))
