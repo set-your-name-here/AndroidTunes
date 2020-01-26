@@ -36,6 +36,7 @@ class ListRecyclerAdapter(var items: ArrayList<ResultItem>, var listener: Recycl
             holder.album.text = item.collectionName
             holder.artist.text = artistValue
 
+            //Setup image of album
             if (item.artworkUrl60.isNotBlank()) {
                 Picasso.get()
                     .load(item.artworkUrl100)

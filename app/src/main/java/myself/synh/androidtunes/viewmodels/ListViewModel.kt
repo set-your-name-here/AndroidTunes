@@ -42,6 +42,10 @@ class ListViewModel(var context: Context, private var listener: ListListener) :
     var listAdapter: ListRecyclerAdapter = ListRecyclerAdapter(ArrayList(), this)
     var listLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
 
+    /**
+     * Load list with albums by keywords
+     * @param term - raw keywords for search
+     */
     fun loadAlbumsByTerm(term: String) {
         if (term.isNotBlank()) {
             listener.showProgressBar()
@@ -85,11 +89,18 @@ class ListViewModel(var context: Context, private var listener: ListListener) :
         }
     }
 
+    /**
+     * Reformat search value for correct condition
+     * @param term - raw value for search
+     */
     private fun reformatTerm(term: String) {
         term.toLowerCase(Locale.ROOT)
         term.replace(" ", TERM_SEPARATOR)
     }
 
+    /**
+     * Reload list of albums by last search
+     */
     fun reloadList() {
         if (listLastSearchTerm.isNotBlank()) {
             loadAlbumsByTerm(listLastSearchTerm)
@@ -103,6 +114,10 @@ class ListViewModel(var context: Context, private var listener: ListListener) :
         listDisposable.clear()
     }
 
+    /**
+     * Open view with description about album
+     * @param album - object with info about chosen album
+     */
     override fun openInfo(album: ResultItem) {
         listener.showAlbumInfo(album)
     }

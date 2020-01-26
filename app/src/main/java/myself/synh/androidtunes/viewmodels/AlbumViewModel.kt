@@ -57,7 +57,7 @@ class AlbumViewModel(var context: Context, collectionId: Long, listener: AlbumLi
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
                 buildDescription(result.results[0])
-                result.results.removeAt(0)
+                result.results.removeAt(0) //Remove album description from list
                 buildTracks(result.results)
                 listener.setupAlbumDescription()
                 listener.hideProgressBar()
@@ -72,6 +72,10 @@ class AlbumViewModel(var context: Context, collectionId: Long, listener: AlbumLi
         albumDisposable.clear()
     }
 
+    /**
+     * Set items in list of tracks and notify changes
+     * @param trackList - list with description about tracks
+     */
     private fun buildTracks(trackList: ArrayList<ResultItem>) {
         albumTracks = trackList
         albumAdapter.apply {
@@ -80,6 +84,10 @@ class AlbumViewModel(var context: Context, collectionId: Long, listener: AlbumLi
         }
     }
 
+    /**
+     * Build items for list with description about album
+     * @param descriptionItem - object with description about album
+     */
     private fun buildDescription(descriptionItem: ResultItem) {
         album = descriptionItem
         val descriptionItems = arrayListOf(
