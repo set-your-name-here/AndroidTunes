@@ -25,8 +25,10 @@ class ListViewModel(var context: Context, private var listener: ListListener) :
     ViewModel(), RecyclerListener {
 
     companion object {
-        private var LOAD_TAG = "AlbumsLoader"
-        private var LOAD_ERROR_LOG_MESSAGE = "Loading error"
+        private const val LOAD_TAG = "AlbumsLoader"
+        private const val LOAD_ERROR_LOG_MESSAGE = "Loading error"
+        private const val EMPTY_LIST_COUNT = 0
+        private const val TERM_SEPARATOR = "+"
     }
 
     private var listDisposable = CompositeDisposable()
@@ -35,7 +37,7 @@ class ListViewModel(var context: Context, private var listener: ListListener) :
         context.resources.getString(R.string.list_error_value),
         Toast.LENGTH_SHORT
     )
-    private var listLastSearchTerm: String = ""
+    private var listLastSearchTerm: String = String()
 
     var listAdapter: ListRecyclerAdapter = ListRecyclerAdapter(ArrayList(), this)
     var listLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
@@ -55,7 +57,7 @@ class ListViewModel(var context: Context, private var listener: ListListener) :
                         entity = RequestMediaEntity.ALBUM.value
                     )
                     .map { result ->
-                        if (result.resultCount != 0) {
+                        if (result.resultCount != EMPTY_LIST_COUNT) {
                             result.results.sortBy { resultItem -> resultItem.collectionName }
                         }
                         return@map result
@@ -63,7 +65,7 @@ class ListViewModel(var context: Context, private var listener: ListListener) :
                     .subscribeOn(Schedulers.single())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({ result ->
-                        if (result.resultCount != 0) {
+                        if (result.resultCount != EMPTY_LIST_COUNT) {
                             listAdapter.items = result.results
                             listAdapter.notifyDataSetChanged()
                         } else {
@@ -76,7 +78,7 @@ class ListViewModel(var context: Context, private var listener: ListListener) :
                     }, { t ->
                         Log.e(LOAD_TAG, LOAD_ERROR_LOG_MESSAGE, t)
                         listLoadErrorToast.show()
-//                        listener.hideProgressBar()
+                        if (listAdapter.items.isNotEmpty()) listener.hideProgressBar()
                         listener.stopRefresh()
                     })
             )
@@ -85,7 +87,7 @@ class ListViewModel(var context: Context, private var listener: ListListener) :
 
     private fun reformatTerm(term: String) {
         term.toLowerCase(Locale.ROOT)
-        term.replace(" ", "+")
+        term.replace(" ", TERM_SEPARATOR)
     }
 
     fun reloadList() {

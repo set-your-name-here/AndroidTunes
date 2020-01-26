@@ -15,6 +15,9 @@ import kotlin.collections.ArrayList
 class AlbumRecyclerAdapter(var tracks: ArrayList<ResultItem>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    companion object {
+        private const val TIME_PATTERN = "mm:ss"
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
         AlbumRecyclerViewHolder(
@@ -40,8 +43,8 @@ class AlbumRecyclerAdapter(var tracks: ArrayList<ResultItem>) :
         var time: AppCompatTextView = view.trackTimes
     }
 
-    private fun formatTime(timestamp: Long): String{
-        val simpleDateFormat = SimpleDateFormat("mm:ss", Locale.ROOT)
+    private fun formatTime(timestamp: Long): String {
+        val simpleDateFormat = SimpleDateFormat(TIME_PATTERN, Locale.ROOT)
         val time = Date(timestamp)
         return simpleDateFormat.format(time)
     }

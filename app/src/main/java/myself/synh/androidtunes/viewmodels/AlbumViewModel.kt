@@ -24,9 +24,10 @@ class AlbumViewModel(var context: Context, collectionId: Long, listener: AlbumLi
 
     companion object {
         private const val ALBUM_LOADER_TAG = "AlbumLoader"
-        private const val ALBUN_LOADER_ERROR_MSG = "Error on load album info"
+        private const val ALBUM_LOADER_ERROR_MSG = "Error on load album info"
         private const val TEXT_SPACE_SEPARATOR = " "
         private const val TEXT_EMPTY = ""
+        private const val EMPTY_LIST_COUNT = 0
     }
 
     private var albumLoadErrorToast = Toast.makeText(
@@ -51,7 +52,7 @@ class AlbumViewModel(var context: Context, collectionId: Long, listener: AlbumLi
                 country = RequestCountryCode.RU.value,
                 entity = RequestMediaEntity.SONG.value
             )
-            .filter { result -> result.resultCount != 0 }
+            .filter { result -> result.resultCount != EMPTY_LIST_COUNT }
             .subscribeOn(Schedulers.single())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ result ->
@@ -61,7 +62,7 @@ class AlbumViewModel(var context: Context, collectionId: Long, listener: AlbumLi
                 listener.setupAlbumDescription()
                 listener.hideProgressBar()
             }, { t ->
-                Log.e(ALBUM_LOADER_TAG, ALBUN_LOADER_ERROR_MSG, t)
+                Log.e(ALBUM_LOADER_TAG, ALBUM_LOADER_ERROR_MSG, t)
                 albumLoadErrorToast.show()
             })
     )

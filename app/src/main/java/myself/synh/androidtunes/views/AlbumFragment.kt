@@ -44,7 +44,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album), AlbumListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        destoryAlbumTracks()
+        destroyAlbumTracks()
     }
 
     override fun setupAlbumDescription() {
@@ -74,7 +74,7 @@ class AlbumFragment : Fragment(R.layout.fragment_album), AlbumListener {
         }
     }
 
-    private fun destoryAlbumTracks(){
+    private fun destroyAlbumTracks(){
         albumRecyclerView.apply {
             adapter = null
             layoutManager = null

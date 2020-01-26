@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_list_item.view.*
@@ -29,7 +31,8 @@ class ListRecyclerAdapter(var items: ArrayList<ResultItem>, var listener: Recycl
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is ListRecyclerViewHolder) {
             val item = items[position]
-            val artistValue = "Исполнитель: ${item.artistName}"
+            val artistValue =
+                "${holder.itemView.context.resources.getString(R.string.list_album_description_artist_name)} ${item.artistName}"
             holder.album.text = item.collectionName
             holder.artist.text = artistValue
 
